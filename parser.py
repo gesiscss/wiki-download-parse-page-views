@@ -107,7 +107,15 @@ def main():
 
     q.join()
 
-    print("Time used: ", (time.time() - start)/3600)
+    end = time.time()
+    duration = end-start
+
+    if duration > 60:
+        print("Time used: {} {}".format(duration/60, "minutes"))
+    if duration > 3600:
+        print("Time used: {} {}".format(duration/3600, "hours"))
+    else:
+        print("Time used: {} {}".format(duration, "seconds"))
 
     # pd.DataFrame(bad_files).to_csv("bad_"+names_file.split("/")[-1])
 

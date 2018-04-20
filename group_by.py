@@ -1,7 +1,5 @@
 
-# coding: utf-8
 
-# In[73]:
 
 import pandas as pd 
 import os
@@ -65,17 +63,30 @@ def main():
     output_path = sys.argv[2]
 
     start = time.time()
+
     files = get_files(file_path)
     print("Loading files.. \n")
+
     lst = load_files_to_lst(files)
     print("Concatinating {} dataframes.. \n".format(len(lst)))
+
     df = concate_to_df(lst)
     lst = None
     gc.collect()
+
     print("Aggregating.. \n")
     agr = df.groupby(by="name")["views"].sum()
     save_aggregation(agr, output_path)
-    print("Time used: ", (time.time() - start)/60)
+    print("Output saved at {}".format(output_path))
+    end = time.time()
+    duration = end-start
+
+    if duration > 60:
+        print("Time used: {} {}".format(duration/60, "minutes"))
+    if duration > 3600:
+        print("Time used: {} {}".format(duration/3600, "hours"))
+    else:
+        print("Time used: {} {}".format(duration, "seconds"))
 
 
 if __name__ == '__main__':
