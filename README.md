@@ -1,4 +1,4 @@
-# wiki-download-parse-page-views
+# Download, Parse, Aggregate Wikpedia Page View Dumps
 Pipeline for downloading, parsing and aggregating static page view dumps from Wikipedia.
 
 # How it works?
