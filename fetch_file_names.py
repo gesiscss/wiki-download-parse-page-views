@@ -21,13 +21,13 @@ def get_files(url):
 	list_elements = [li.a.get("href") for li in list_elements]
 	return list_elements, size
 
-def get_url(file_name):
+def get_url(host_path, file_name):
     """ Goes to lambda function
     """
     date = file_name.split("-")[1]
     year = date[:4]
     month = date[4:6]
-    url = form_url(year, month, file_name)
+    url = form_url(host_path,year, month, file_name)
     return url
 
 def main():
@@ -73,7 +73,7 @@ def main():
 		df = df[df["filter"] == "yes"]
 		df = df.drop("filter", axis=1)
 		df["size"] = pd.to_numeric(df["size"], errors='coerce')
-		df["url"] = df["file"].apply(lambda x: get_url(x))
+		df["url"] = df["file"].apply(lambda x: get_url(host_path, x))
 
 		path = join(output_dir, str(year)+".csv")
 		df.to_csv(path,index=False)
