@@ -29,7 +29,7 @@ def load_names_df(path):
     return df 
 
 
-def parse(path_old, path_new, names_df):
+def parse(path_old, path_new, names_df, project="en"):
     """ Reads file, eliminates unneeded data, filters for project "en" and sspecified names
     """
     global bad_files
@@ -39,7 +39,7 @@ def parse(path_old, path_new, names_df):
     try:
         df = pd.read_csv(path_old, sep=" ")
         df.columns = ["project", "name", "views", "size"]
-        df = df[df["project"] == "en"]
+        df = df[df["project"] == project]
         df = df.drop(["size","project"], axis=1)
         df = df.merge(names_df, on=["name"])
         path_new = path_new + f_name
@@ -49,7 +49,7 @@ def parse(path_old, path_new, names_df):
         try:
             df = pd.read_csv(path_old, sep=" ", encoding="latin_1")
             df.columns = ["project", "name", "views", "size"]
-            df = df[df["project"] == "en"]
+            df = df[df["project"] == project]
             df = df.drop(["size","project"], axis=1)
             df = df.merge(names_df, on=["name"])
             path_new = path_new + f_name
