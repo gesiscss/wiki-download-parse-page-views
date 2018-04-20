@@ -1,11 +1,9 @@
 
-# import urllib2
 import threading
 from queue import Queue
 import sys, time
 import pandas as pd
 import requests
-# import cProfile
 import time
 import os
 from os import listdir
@@ -36,11 +34,7 @@ def parse(path_old, path_new, names_df):
     """
     global bad_files
 
-    # f_name = path_old.split("\\")[-1] #windows
     f_name = path_old.split("/")[-1]
-    # print("PAth old: ", path_old) 
-    # print("PAth new: ", path_new)
-    # print(f_name) 
 
     try:
         df = pd.read_csv(path_old, sep=" ")
@@ -63,13 +57,6 @@ def parse(path_old, path_new, names_df):
             print("{} > {}, DONE! ".format(path_old, path_new))
         except:
             print("SKIP")
-    # df.columns = ["project", "name", "views", "size"]
-    # df = df[df["project"] == "en"]
-    # df = df.drop(["size","project"], axis=1)
-    # df = df.merge(names_df, on=["name"])
-    # path_new = path_new + f_name
-    # df.to_csv(path_new, sep=" ",compression="gzip", index=False, header=False)
-    # print("{} > {}, DONE! ".format(path_old, path_new))
 
 
 def threader(names_df, save_dir):
@@ -94,7 +81,7 @@ def start_threads(num_threads, names_df, save_dir):
          # classifying as a daemon, so they will die when the main dies
         t.daemon = True
         # print("Thread started")
-         # begins, must come after daemon definition
+        # begins, must come after daemon definition
         t.start()
 
 
@@ -108,8 +95,7 @@ def main():
     num_threads = int(sys.argv[4])
 
     df = load_names_df(names_file)
-    # print(df.head())  
-    # urls = list(df["url"].values)
+  
     files = get_files(files_dir)
 
     q = Queue()

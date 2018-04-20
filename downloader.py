@@ -1,5 +1,5 @@
 
-# import urllib2
+
 import threading
 from queue import Queue
 import sys, time
@@ -12,7 +12,6 @@ def download(url, save_path, lib="requests"):
     """ Downloads file to specified path, if server returns status codes other than 200 url is saved
     """
     # the speed diference is insignificant between 'requests' and 'wget'
-    # global next_run
 
     f_name = url.split("/")[-1]
     save = save_path+"/"+f_name
@@ -63,7 +62,7 @@ def start_threads(num_threads, save_path):
          # classifying as a daemon, so they will die when the main dies
         t.daemon = True
         # print("Thread started")
-         # begins, must come after daemon definition
+        # begins, must come after daemon definition
         t.start()
 
 

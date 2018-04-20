@@ -14,7 +14,7 @@ import sys, time
 import gc
 
 def get_files(path):
-    """ Returns a list of files in a directory
+    """ Returns a list of files from a directory
         Input parameter: path to directory
     """
     mypath = path
@@ -22,11 +22,9 @@ def get_files(path):
     file_paths = [mypath+file for file in complete]
     return file_paths
 
-# files = get_files(file_path)
-
-
 def load_files_to_lst(file_paths):
-    """ Loads all files into pandas dataframe and adds them to list
+    """ Loads all files into a pandas dataframe, appends dataframes to 
+        a list which is returned
     """
     df_lst = []
     for file in tqdm.tqdm(file_paths):
@@ -36,26 +34,19 @@ def load_files_to_lst(file_paths):
             print("Skiped: ", file)
             pass
         df.columns = ['name', 'views']
-#         print(df.head(2))
         df_lst.append(df)
     return df_lst
 
-# lst = load_files_to_lst(file_paths)
 
 def concate_to_df(lst):
-    """ Concats all dataframes to one
+    """ Concats all dataframes from the given list to one dataframe
     """
     df = pd.concat(lst,ignore_index=True)
     print(df.info())
     return df
 
-# df = concate_to_df(lst)
-
-# agr = df.groupby(by="name")["views"].sum()
-
-
 def save_aggregation(agr, path):
-    """ Saves csv file to specified location 
+    """ Saves a csv file on the specified location 
     """
     name_q = agr.index
     views = agr.values
@@ -67,8 +58,6 @@ def save_aggregation(agr, path):
     })
     print("File saved at {}".format(path))
     df.to_csv(path, encoding="utf-8", index=False)
-
-# save_aggregation(agr, "test.csv")
 
 def main():
 
