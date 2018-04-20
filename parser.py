@@ -59,24 +59,24 @@ def parse(path_old, path_new, names_df, project="en"):
             print("SKIP")
 
 
-def threader(names_df, save_dir):
+def threader(names_df, save_dir, project):
     global q
     while q.empty() != True:
         # gets a worker from the queue
         worker = q.get()
 
         # Run the example job with the avail worker in queue (thread)
-        parse(worker, save_dir, names_df) 
+        parse(worker, save_dir, names_df, project) 
 
         # completed with the job
         q.task_done()
 
 
-def start_threads(num_threads, names_df, save_dir):
+def start_threads(num_threads, names_df, save_dir, project):
 
     for x in range(num_threads):
         time.sleep(0.05)
-        t = threading.Thread(target=threader, args=(names_df, save_dir,))
+        t = threading.Thread(target=threader, args=(names_df, save_dir, project,))
 
          # classifying as a daemon, so they will die when the main dies
         t.daemon = True
@@ -92,7 +92,8 @@ def main():
     names_file = sys.argv[1]
     files_dir = sys.argv[2]
     save_dir = sys.argv[3]
-    num_threads = int(sys.argv[4])
+    project = sys.argv[4]
+    num_threads = int(sys.argv[5])
 
     df = load_names_df(names_file)
   
@@ -103,7 +104,7 @@ def main():
     for worker in files:
         q.put(worker)
 
-    start_threads(num_threads, df, save_dir)
+    start_threads(num_threads, df, save_dir, project)
 
     q.join()
 
