@@ -38,7 +38,7 @@ python fetch_file_names.py  [year_start] [year_end] [output_dir]
 file | size |url |
 --- |--- |--- |
 pagecounts-20140101-000000.gz |82| https://.. |
-pagecounts-20140201-000000.gz |81|https://.. |
+pagecounts-20140201-000000.gz |81| https://.. |
 ... | ... | ... |
 
 # Downloading files
@@ -73,11 +73,11 @@ The column **names_u** is standard utf-8 encoding (the unquated representation),
 
 ### parser.py
 
-Opens specified list of files in **files_dir**, filters them per names in **page_names_file**, saves filtered files in **save_dir** using
+Opens specified list of files in **files_dir**, filters them per names in **page_names_file** and **project_name** ("en" for english wikipedia, "de" for german, etc.), saves filtered files in **save_dir** using
+a specified **num_threads**.
 
-**num_threads** 
 ```{r, engine='bash', count_lines}
-python parser.py [page_names_file] [files_dir] [save_dir] [num_threads]
+python parser.py [page_names_file] [files_dir] [save_dir] [project_name] [num_threads]
 ```
 
 # Getting the aggregated pageviews
